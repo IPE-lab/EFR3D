@@ -5,7 +5,7 @@
 ***
 ## Paper Support
 - Original information: Energy-Based Fracture Network Reconstruction of Shale Gas Reservoir
-- Recruitment Journal: Asia Pacific Unconventional Resources Symposium held in Brisbane, Australia on 14 – 15 November 2023. 
+- Recruitment conferences: SPE Asian Pacific Unconventional Resources Symposium (SPE OnePetro) 
 - Original DOI: https://doi.org/10.2118/217311-MS
 ***
 ## Description of the project
