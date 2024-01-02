@@ -1,6 +1,6 @@
 # **An Energy-based 3D Fracture Reconstruction method (EFR3D)**
 ## Running screenshots show
-- **results**
+- **Fracture reconstruction of a well from field microseismic data**
   - <img src="img/Fracture reconstruction of a well from field microseismic data.jpg" width="400" />
 ***
 ## Paper Support
