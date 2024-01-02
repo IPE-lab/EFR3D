@@ -1,7 +1,7 @@
 # **An Energy-based 3D Fracture Reconstruction method (EFR3D)**
 ## Running screenshots show
 - **results**
-  - <img src="img/results.png" width="400" />
+  - <img src="img/Fracture reconstruction of a well from field microseismic data.jpg" width="400" />
 ***
 ## Paper Support
 - Original information: Energy-Based Fracture Network Reconstruction of Shale Gas Reservoir
