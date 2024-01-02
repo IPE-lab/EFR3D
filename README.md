@@ -1,4 +1,4 @@
-# **Energy-Based Fracture Network Reconstruction of Shale Gas Reservoir**
+# **An Energy-based 3D Fracture Reconstruction method (EFR3D)**
 ## Running screenshots show
 - **results**
   - <img src="img/results.png" width="400" />
