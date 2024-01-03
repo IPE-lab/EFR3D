@@ -5,7 +5,7 @@
 ***
 ## Paper Support
 - Original information: Energy-Based Fracture Network Reconstruction of Shale Gas Reservoir
-- Recruitment conferences: SPE Asian Pacific Unconventional Resources Symposium (SPE OnePetro) 
+- Recruitment conference: SPE Asian Pacific Unconventional Resources Symposium (SPE OnePetro) 
 - Original DOI: https://doi.org/10.2118/217311-MS
 ***
 ## Description of the project
