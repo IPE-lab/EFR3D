@@ -12,7 +12,7 @@ from scipy.spatial import Delaunay
 import mpl_toolkits.mplot3d as a3
 
 
-#生成初始标签
+#Generate initial labels
 def initial_model_gen(points, min_ratio=0.00, threshold=0.01, iterations=1000):
     planes_fun, planes_idx = DetectMultiPlanes(points, min_ratio=min_ratio, threshold=threshold, iterations=iterations, idx=True)
     ini_inliers = points[list(set(chain.from_iterable(planes_idx)))]
@@ -27,26 +27,26 @@ def initial_model_gen(points, min_ratio=0.00, threshold=0.01, iterations=1000):
         
     return planes_fun, planes_idx, ini_inliers, ini_outliers, ini_labels
     
-#能量最小化
+#Energy minimization
 def energy_min(planes_fun, inliers, outliers,ini_labels, ksi=5, algorithm='expansion', n_inter=-1):
     # def energy_opt(datcost, smooth, edges, edge_weights,algorithm='expansion', n_inter=-1):
     
     initialize = 0
     extend_points = np.ones((len(inliers), 4))
-    #nx4矩阵 xi yi zi 1
+    #nx4 array xi yi zi 1
     extend_points[:, 0:3] = inliers
-    #4xm矩阵 ai bi ci di.T
+    #4xm array ai bi ci di.T
     planes_para = np.array(planes_fun).T
     # print(extend_points)
     # print(planes_para)
-    #计算当前datacost
+    #Calculate current datacost
     datacost = abs(np.dot(extend_points, planes_para))
     
-    #三角剖分
+    #Triangulation
     tri = Delaunay(inliers)
-    #获得四面体顶点 每行 按从小到大排列
+    #Obtain tetrahedral vertices and arrange each row in ascending order
     vertices = np.sort(tri.simplices)
-    #权重6列 代表四面6个边 01 02 03 12 13 23
+    #Weight has 6 columns represent 6 edges on all four sides 01 02 03 12 13 23
     weights = np.ones((len(vertices), 6))
     # w=exp(-||p-q||^2/ksi^2)
     w0_1 = inliers[vertices[:, 0]] - inliers[vertices[:, 1]]
@@ -62,7 +62,7 @@ def energy_min(planes_fun, inliers, outliers,ini_labels, ksi=5, algorithm='expan
     w2_3 = inliers[vertices[:, 2]] - inliers[vertices[:, 3]]
     weights[:, 5] = np.exp(- np.linalg.norm(w2_3, axis=1) ** 2 / ksi**2)
     
-    #边的左顶点 要求做顶点的索引小于右边的
+    #The left vertex of the edge requires the vertex index to be smaller than the right vertex
     edge0 = np.ones((len(vertices), 6))
     edge0[:, 0] = vertices[:, 0]
     edge0[:, 1] = vertices[:, 0]
@@ -70,7 +70,7 @@ def energy_min(planes_fun, inliers, outliers,ini_labels, ksi=5, algorithm='expan
     edge0[:, 3] = vertices[:, 1]
     edge0[:, 4] = vertices[:, 1]
     edge0[:, 5] = vertices[:, 2]
-    #边的左顶点
+    #The right vertices 
     edge1 = np.ones((len(vertices), 6))
     edge1[:, 0] = vertices[:, 1]
     edge1[:, 1] = vertices[:, 2]
@@ -79,14 +79,14 @@ def energy_min(planes_fun, inliers, outliers,ini_labels, ksi=5, algorithm='expan
     edge1[:, 4] = vertices[:, 3]
     edge1[:, 5] = vertices[:, 3]
     
-    # 不同类为1 同类为0 nlabelxnlabel
+    # 1 for different classes and 0 for the same class, nlabelxnlabel array
     smooth = smooth = (1 - np.eye(len(planes_fun))).astype(np.float64)
     # print(datacost, ini_labels)
     # print(vertices, edge0.T.flatten(), edge1.T.flatten())
     # print(weights.T.flatten())
     
-    #设定datacost neighbour smoothcost 
-    # 防止内存溢出 缩放矩阵
+    #Set datacost neighbour smoothcost 
+    # Prevent memory overflow scaling matrix
     max_arr = max(np.abs(datacost).max(), np.abs(weights).max() * smooth.max())
     down_weight_factor = max_arr + 1e-10
     print('max_arr', max_arr)
@@ -94,7 +94,7 @@ def energy_min(planes_fun, inliers, outliers,ini_labels, ksi=5, algorithm='expan
     
     return labels
 
-#融合平面
+#Merge planes
 def merge(planes):
       
       plane, point_idx = map(list, zip(*planes))
@@ -108,21 +108,21 @@ def merge(planes):
       point_idx = np.array(point_idx, dtype=object)
       
       planes_merged = []
-      # 看看有多少平面离的比较近 聚类
+      # See how many planes are clustered closer together
       for i in list(set(label_pred)):
             # print(i, list(set(label_pred)))
-            # 对于每一簇平面 选取第一个为最终平面
+            # For each cluster plane, select the first as the final plane
             plane_i = plane[label_pred == i][0]
-            # 将该簇平面附近的点融合为一个列表
+            # Merge the points near the cluster plane into a list
             point_idx_i = point_idx[label_pred == i]
             point_idx_i = list(set(chain.from_iterable(list(point_idx_i))))
             planes_merged.append([list(plane_i), point_idx_i])
       return planes_merged
     
-#outlier recheck    
+#Outlier recheck    
 def ocheck(planes_fun, inliers, outliers,ini_labels):
     jj = 0
-#迭代直至能量不减少
+#Iteration until energy does not decrease
 def energy_opt(planes_fun, inliers, outliers,ini_labels):
     tt = 0
-
+    
