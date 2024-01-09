@@ -40,6 +40,7 @@ PEARL git. py is used for mesh reconstruction and contains 5 functions, of which
 
 #### 3、Call functions 1 to 5 in sequence.
 
+***
 ## Update
 1. 2024.1.9 version 1.0.0 ==> 1.0.1
 Description: change code annotation language: Chinese ==> English
